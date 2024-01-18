@@ -18,13 +18,13 @@ actor Cache<Input, Output>: ObservableObject where Input: Hashable {
 	///
 	/// - Parameter load: Method to asyncronously load data from the source.
 	///					  The result will be cached for subsequent requests.
-	init(load: @escaping (Input) async throws -> Output) {
+	public init(load: @escaping (Input) async throws -> Output) {
 		self.load = load
 	}
 	
 	@Published
 	/// <#Description#>
-	private var _storage: [Input : Entry] = [:]
+	public var _storage: [Input : Entry] = [:]
 	
 	/// Accesses a value from the cache, loading it if not found.
 	/// - Parameter input: The value to look for in the cache, or load.
