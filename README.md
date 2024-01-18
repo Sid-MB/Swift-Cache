@@ -1,5 +1,5 @@
 # Swift Cache
-`Cache` is a lightweight data model that loads content asyncronously while efficently handling concurrent duplicative requests.
+A lightweight data model that loads content asyncronously while efficently handling concurrent duplicative requests.
 
 ### Example Usage
 
