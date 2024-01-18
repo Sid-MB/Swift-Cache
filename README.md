@@ -16,9 +16,13 @@ struct CollaboratorsList: View {
   var body: some View {
     ForEach(collaboratorIDs, id: \.self) { userID in
       VStack {
+        // Retrieve user data from the cache.
         if let user = userModel.retrieveIfAvailable(userID) {
           Text(user.name)
           Text(user.email)
+        } else {
+          ProgressView()
+        }
       }
       .task {
         // Loads the user's data.
