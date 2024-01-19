@@ -26,7 +26,7 @@ class DocumentsModel {
 
   // On the first request for an artist, songs are loaded from the server.
   // On subsequent requests, data is pulled instantly from the cache.
-  func getSongs(for artist: Artist) -> [Song] {
+  func getSongs(for artist: Artist) async throws -> [Song] {
     return try await songsByArtist[artist]
   }
 }
