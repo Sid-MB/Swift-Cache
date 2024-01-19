@@ -1,6 +1,17 @@
 # Swift Cache
 A lightweight data model that loads content asyncronously while efficently handling concurrent duplicative requests.
 
+### Use Swift Cache in your Project
+Option A (simple, easy, no dependencies): Copy-and-paste [the file](https://github.com/Sid-MB/Swift-Cache/raw/main/Sources/Cache/Cache.swift) into your project.
+
+Option B (auto-updating): Use Swift Package Manager. The library is available at:
+
+```md
+https://github.com/Sid-MB/Swift-Cache
+```
+
+
+
 ### Example Usage
 
 In a data model:
@@ -53,12 +64,3 @@ struct CollaboratorsList: View {
 }
 
 ```
-
-### Use Swift Cache
-Option A: Use Swift Package Manager. The library is available at:
-
-```md
-https://github.com/Sid-MB/Swift-Cache
-```
-
-Option B: Copy-and-paste [the file](https://github.com/Sid-MB/Swift-Cache/raw/main/Sources/Cache/Cache.swift) into your project.
