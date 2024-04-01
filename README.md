@@ -48,19 +48,19 @@ struct CollaboratorsList: View {
       VStack {
         // Retrieve user data from the cache.
         // When the data finishes loading in the background, the view will automatically update.
-        if let user = userModel.retrieveIfAvailable(userID) {
+        if let user = userModel.request(userID) {
           Text(user.name)
           Text(user.email)
         } else {
           ProgressView()
         }
       }
-      .task {
-        // Loads the user's data.
-        try? await userModel[userID]
-      }
     }
   }
 }
 
 ```
+
+> [!NOTE]
+> Use within the body of SwiftUI views may require converting the `Cache` actor into a class
+> with a `@MainActor` annotation to prevent "synchronous non-isolated context" errors.
