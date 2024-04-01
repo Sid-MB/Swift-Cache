@@ -1,8 +1,10 @@
 //
 //  Cache.swift
-//  Pocket Congress
 //
 //  Created by Siddharth M. Bhatia on 12/21/23.
+//
+//  Copyright (c) 2023 - 2024 Siddharth M. Bhatia
+//  Licensed under Apache License v2.0 with Runtime Library Exception
 //
 
 import Foundation
@@ -23,7 +25,7 @@ actor Cache<Input, Output>: ObservableObject where Input: Hashable {
 	}
 	
 	@Published
-	/// <#Description#>
+	/// The underlying storage of the Cache.
 	public var _storage: [Input : Entry] = [:]
 	
 	/// Accesses a value from the cache, loading it if not found.
@@ -56,6 +58,10 @@ actor Cache<Input, Output>: ObservableObject where Input: Hashable {
 		}
 	}
 	
+	/// Accesses a value from the cache, loading it if not found.
+	/// - Parameter input: The value to look for in the cache, or load.
+	/// - Returns: The value either stored in the cache or loaded.
+	/// - Throws: Rethrows any errors thrown from the load task.
 	subscript(input: Input) -> Output {
 		get async throws {
 			return try await self.value(for: input)
