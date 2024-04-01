@@ -24,7 +24,6 @@ actor Cache<Input, Output>: ObservableObject where Input: Hashable {
 		self.load = load
 	}
 	
-	@Published
 	/// The underlying storage of the Cache.
 	public var _storage: [Input : Entry] = [:]
 	
@@ -50,6 +49,7 @@ actor Cache<Input, Output>: ObservableObject where Input: Hashable {
 		
 		do {
 			let output = try await task.value
+			objectWillChange.send()
 			_storage[input] = .ready(output)
 			return output
 		} catch {
@@ -79,8 +79,34 @@ actor Cache<Input, Output>: ObservableObject where Input: Hashable {
 		return nil
 	}
 	
+	/// Retrieves a value immediately if cached.
+	/// If there is no cached data, silently loads it in the background.
+	///
+	///	SwiftUI views calling this property will automatically
+	///	refresh when data is loaded.
+	///
+	/// If there is no cached data, notification of loaded content will occur
+	/// through the `ObservableObject` publisher.
+	///
+	/// - Parameter input: The value to retrieve.
+	/// - Returns: The result for the specified input, if already loaded.
+	///   Otherwise,  returns `nil` and loads the result in the background.
+	func request(_ input: Input) -> Output? {
+		if let value = retrieveIfAvailable(input) {
+			return value
+		}
+		
+		defer {
+			Task {
+				try await self.value(for: input)
+			}
+		}
+		
+		return nil
+	}
+	
 	/// A result or pending result stored in the cache.
-	private enum Entry {
+	public enum Entry {
 		case inProgress(Task<Output, Error>)
 		case ready(Output)
 	}
